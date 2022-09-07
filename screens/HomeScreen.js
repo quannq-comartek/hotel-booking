@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
 import {
   View,
@@ -8,12 +9,13 @@ import {
   Dimensions,
   FlatList,
   ScrollView,
+  TouchableOpacity,
 } from 'react-native';
 import React, {useState} from 'react';
 import COLORS from '../constants/colors';
 
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faSearch} from '@fortawesome/free-solid-svg-icons';
+import {faSearch, faCartShopping} from '@fortawesome/free-solid-svg-icons';
 import {TextInput} from 'react-native-gesture-handler';
 import data from '../constants/data';
 import Card from '../components/Card';
@@ -23,25 +25,48 @@ let {width} = Dimensions.get('screen');
 let cardWidth = width / 1.8;
 
 const HomeScreen = ({navigation}) => {
-  const [activeCardIndex, setActiveCardIndex] = useState(0);
+  const [bookMark, setBookMark] = useState([]);
 
   const scrollX = React.useRef(new Animated.Value(0)).current;
+
+  // const addToBookMarkHandler = () => {
+  //   setBookMark(prev => [...prev, bookMark]);
+  // };
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
       <ScrollView>
         <View style={styles.header}>
-          <View style={{paddingBottom: 15}}>
-            <Text style={{fontSize: 30, fontWeight: 'bold'}}>
-              Find your homestay
-            </Text>
-            <View style={{flexDirection: 'row'}}>
-              <Text style={{fontSize: 30, fontWeight: 'bold'}}>in </Text>
-              <Text
-                style={{fontSize: 30, fontWeight: 'bold', color: COLORS.xanh}}>
-                HomeStay
+          <View
+            style={{
+              paddingBottom: 15,
+              flexDirection: 'row',
+              justifyContent: 'space-around',
+              alignItems: 'center',
+            }}>
+            <View>
+              <Text style={{fontSize: 30, fontWeight: 'bold'}}>
+                Find your homestay
               </Text>
+              <View style={{flexDirection: 'row'}}>
+                <Text style={{fontSize: 30, fontWeight: 'bold'}}>in </Text>
+                <Text
+                  style={{
+                    fontSize: 30,
+                    fontWeight: 'bold',
+                    color: COLORS.xanh,
+                  }}>
+                  HomeStay
+                </Text>
+              </View>
             </View>
+            <TouchableOpacity onPress={() => navigation.navigate('CartList')}>
+              <FontAwesomeIcon
+                icon={faCartShopping}
+                size={28}
+                color={COLORS.xanh}
+              />
+            </TouchableOpacity>
           </View>
           <View>
             <View style={styles.searchContainer}>
@@ -78,7 +103,6 @@ const HomeScreen = ({navigation}) => {
               contentContainerStyle={{
                 paddingVertical: 30,
                 paddingLeft: 20,
-                // paddingRight: cardWidth / 2 - 40,
               }}
               showsHorizontalScrollIndicator={false}
               renderItem={({item, index}) => (
@@ -101,7 +125,9 @@ const HomeScreen = ({navigation}) => {
             <Text style={{color: COLORS.xanh, fontWeight: 'bold'}}>
               Top Homestay
             </Text>
-            <Text style={{color: COLORS.primary}}>Show all</Text>
+            <TouchableOpacity onPress={() => navigation.navigate('ListScreen')}>
+              <Text style={{color: COLORS.primary}}>Show all</Text>
+            </TouchableOpacity>
           </View>
           <FlatList
             data={data}

@@ -18,7 +18,7 @@ import COLORS from '../constants/colors';
 let {width} = Dimensions.get('screen');
 let cardWidth = width / 1.8;
 
-const Card = ({hotel, index, onPress, scrollX}) => {
+const Card = ({hotel, index, onPress, scrollX, onPress1}) => {
   const inputRange = [
     (index - 1) * cardWidth,
     index * cardWidth,
@@ -53,7 +53,9 @@ const Card = ({hotel, index, onPress, scrollX}) => {
                 {hotel.location}
               </Text>
             </View>
-            <FontAwesomeIcon icon={faBookmark} size={26} />
+            <TouchableOpacity onPress={onPress1}>
+              <FontAwesomeIcon icon={faBookmark} size={26} />
+            </TouchableOpacity>
           </View>
 
           <View

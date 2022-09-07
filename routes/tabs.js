@@ -1,7 +1,6 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/HomeScreen';
-import ListScreen from '../screens/ListScreen';
 
 import COLORS from '../constants/colors';
 
@@ -10,9 +9,10 @@ import {
   faHouse,
   faUser,
   faCreditCard,
-  faList,
-  faBullseye,
+  faBookmark,
 } from '@fortawesome/free-solid-svg-icons';
+import BookmarkScreen from '../screens/BookmarkScreen';
+import UserScreen from '../screens/UserScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -20,6 +20,7 @@ const Tabs = () => {
   return (
     <Tab.Navigator
       screenOptions={({route}) => ({
+        headerShown: false,
         tabBarIcon: ({focused}) => {
           const tintColor = focused ? COLORS.xanh : COLORS.primary;
 
@@ -49,10 +50,10 @@ const Tabs = () => {
                   style={{color: tintColor}}
                 />
               );
-            case 'List':
+            case 'Bookmark':
               return (
                 <FontAwesomeIcon
-                  icon={faList}
+                  icon={faBookmark}
                   size={25}
                   style={{color: tintColor}}
                 />
@@ -61,14 +62,14 @@ const Tabs = () => {
         },
       })}>
       <Tab.Screen
-        options={{tabBarShowLabel: faBullseye}}
+        options={{tabBarShowLabel: false}}
         name="Home"
         component={HomeScreen}
       />
       <Tab.Screen
         options={{tabBarShowLabel: false}}
-        name="List"
-        component={ListScreen}
+        name="Bookmark"
+        component={BookmarkScreen}
       />
       <Tab.Screen
         options={{tabBarShowLabel: false}}
@@ -78,7 +79,7 @@ const Tabs = () => {
       <Tab.Screen
         options={{tabBarShowLabel: false}}
         name="User"
-        component={HomeScreen}
+        component={UserScreen}
       />
     </Tab.Navigator>
   );

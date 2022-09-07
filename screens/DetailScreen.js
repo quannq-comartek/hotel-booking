@@ -8,6 +8,7 @@ import {
   ImageBackground,
   StyleSheet,
   TouchableOpacity,
+  ToastAndroid,
 } from 'react-native';
 import React from 'react';
 import COLORS from '../constants/colors';
@@ -19,8 +20,43 @@ import {
   faStar,
 } from '@fortawesome/free-solid-svg-icons';
 
-const DetailScreen = ({navigation, route}) => {
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const DetailScreen = ({navigation, route, onPress}) => {
   const item = route.params;
+
+  const addToCartHandler = async id => {
+    let itemArray = await AsyncStorage.getItem('cartItems');
+    itemArray = JSON.parse(itemArray);
+    if (itemArray) {
+      let array = itemArray;
+      array.push(id);
+
+      try {
+        await AsyncStorage.setItem('cartItems', JSON.stringify(array));
+        ToastAndroid.show(
+          'Item Added Successfully to cart',
+          ToastAndroid.SHORT,
+        );
+        navigation.navigate('HomeScreen');
+      } catch (error) {
+        return error;
+      }
+    } else {
+      let array = [];
+      array.push(id);
+      try {
+        await AsyncStorage.setItem('cartItems', JSON.stringify(array));
+        ToastAndroid.show(
+          'Item Added Successfully to cart',
+          ToastAndroid.SHORT,
+        );
+        navigation.navigate('HomeScreen');
+      } catch (error) {
+        return error;
+      }
+    }
+  };
 
   return (
     <ScrollView
@@ -43,13 +79,15 @@ const DetailScreen = ({navigation, route}) => {
               color={COLORS.white}
             />
           </TouchableOpacity>
-          <FontAwesomeIcon icon={faBookmark} size={28} color={COLORS.white} />
+          <TouchableOpacity onPress={onPress}>
+            <FontAwesomeIcon icon={faBookmark} size={28} color={COLORS.white} />
+          </TouchableOpacity>
         </View>
       </ImageBackground>
       <View>
-        <View style={styles.iconContainer}>
+        <TouchableOpacity activeOpacity={0.9} style={styles.iconContainer}>
           <FontAwesomeIcon icon={faLocation} size={28} color={COLORS.white} />
-        </View>
+        </TouchableOpacity>
         <View style={{marginTop: 20, paddingHorizontal: 20}}>
           <Text style={{fontSize: 20, fontWeight: 'bold'}}>{item.name}</Text>
           <Text
@@ -120,7 +158,7 @@ const DetailScreen = ({navigation, route}) => {
           </View>
         </View>
         <View style={styles.btn}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => addToCartHandler(item.id)}>
             <Text
               style={{color: COLORS.white, fontSize: 18, fontWeight: 'bold'}}>
               Book Now

@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
   card: {
     height: 300,
     width: '100%',
-    elevation: 15,
+    // elevation: 5,
     marginRight: 20,
     borderRadius: 15,
 

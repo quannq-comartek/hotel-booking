@@ -19,7 +19,7 @@ const Login = ({placeholder, icon, ...otherProps}) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: COLORS.bacha,
-    borderRadius: 25,
+    borderRadius: 10,
     flexDirection: 'row',
     width: '85%',
     padding: Platform.OS === 'android' ? 5 : 15,

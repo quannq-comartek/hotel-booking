@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {
   SafeAreaView,
   FlatList,
@@ -5,20 +6,30 @@ import {
   StyleSheet,
   TextInput,
   ScrollView,
+  TouchableOpacity,
 } from 'react-native';
 import React from 'react';
 import data from '../constants/data';
 import CardList from '../components/CardList';
 
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faSearch} from '@fortawesome/free-solid-svg-icons';
+import {faSearch, faArrowCircleLeft} from '@fortawesome/free-solid-svg-icons';
 
 import COLORS from '../constants/colors';
 
-const ListScreen = () => {
+const ListScreen = ({navigation}) => {
   return (
     <SafeAreaView>
       <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={{marginTop: 20, marginHorizontal: 20}}>
+          <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')}>
+            <FontAwesomeIcon
+              icon={faArrowCircleLeft}
+              size={30}
+              color={COLORS.xanh}
+            />
+          </TouchableOpacity>
+        </View>
         <View>
           <View style={styles.searchContainer}>
             <FontAwesomeIcon

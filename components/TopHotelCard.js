@@ -34,7 +34,7 @@ const TopHotelCard = ({hotel}) => {
 
 const styles = StyleSheet.create({
   topHotelCard: {
-    height: 160,
+    height: 170,
     width: 200,
     backgroundColor: COLORS.white,
     elevation: 15,
