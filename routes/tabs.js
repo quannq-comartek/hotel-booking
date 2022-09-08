@@ -5,12 +5,7 @@ import HomeScreen from '../screens/HomeScreen';
 import COLORS from '../constants/colors';
 
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {
-  faHouse,
-  faUser,
-  faCreditCard,
-  faBookmark,
-} from '@fortawesome/free-solid-svg-icons';
+
 import BookmarkScreen from '../screens/BookmarkScreen';
 import UserScreen from '../screens/UserScreen';
 
@@ -28,7 +23,7 @@ const Tabs = () => {
             case 'Home':
               return (
                 <FontAwesomeIcon
-                  icon={faHouse}
+                  icon="fa-solid fa-house"
                   size={25}
                   style={{color: tintColor}}
                 />
@@ -36,7 +31,7 @@ const Tabs = () => {
             case 'User':
               return (
                 <FontAwesomeIcon
-                  icon={faUser}
+                  icon="fa-solid fa-user"
                   size={25}
                   style={{color: tintColor}}
                 />
@@ -45,7 +40,7 @@ const Tabs = () => {
             case 'Checkout':
               return (
                 <FontAwesomeIcon
-                  icon={faCreditCard}
+                  icon="fa-calendar-days"
                   size={25}
                   style={{color: tintColor}}
                 />
@@ -53,7 +48,7 @@ const Tabs = () => {
             case 'Bookmark':
               return (
                 <FontAwesomeIcon
-                  icon={faBookmark}
+                  icon="fa-solid fa-bookmark"
                   size={25}
                   style={{color: tintColor}}
                 />

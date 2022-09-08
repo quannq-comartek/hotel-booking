@@ -54,7 +54,11 @@ const Card = ({hotel, index, onPress, scrollX, onPress1}) => {
               </Text>
             </View>
             <TouchableOpacity onPress={onPress1}>
-              <FontAwesomeIcon icon={faBookmark} size={26} />
+              <FontAwesomeIcon
+                icon={faBookmark}
+                size={26}
+                style={{color: COLORS.grey}}
+              />
             </TouchableOpacity>
           </View>
 

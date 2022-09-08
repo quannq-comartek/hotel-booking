@@ -15,7 +15,7 @@ import React, {useState} from 'react';
 import COLORS from '../constants/colors';
 
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faSearch, faCartShopping} from '@fortawesome/free-solid-svg-icons';
+import {faSearch} from '@fortawesome/free-solid-svg-icons';
 import {TextInput} from 'react-native-gesture-handler';
 import data from '../constants/data';
 import Card from '../components/Card';
@@ -40,9 +40,6 @@ const HomeScreen = ({navigation}) => {
           <View
             style={{
               paddingBottom: 15,
-              flexDirection: 'row',
-              justifyContent: 'space-around',
-              alignItems: 'center',
             }}>
             <View>
               <Text style={{fontSize: 30, fontWeight: 'bold'}}>
@@ -60,13 +57,6 @@ const HomeScreen = ({navigation}) => {
                 </Text>
               </View>
             </View>
-            <TouchableOpacity onPress={() => navigation.navigate('CartList')}>
-              <FontAwesomeIcon
-                icon={faCartShopping}
-                size={28}
-                color={COLORS.xanh}
-              />
-            </TouchableOpacity>
           </View>
           <View>
             <View style={styles.searchContainer}>

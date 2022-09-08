@@ -1,5 +1,5 @@
 const profiles = {
-  username: 'react-ui-kit',
+  username: 'react-ui',
   location: 'Europe',
   email: 'contact@react-ui-kit.com',
   avatar: require('../assets/images/onboardImage1.jpeg'),

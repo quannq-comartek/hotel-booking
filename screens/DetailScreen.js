@@ -24,20 +24,19 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const DetailScreen = ({navigation, route, onPress}) => {
   const item = route.params;
+  //console.log(item);
 
   const addToCartHandler = async id => {
     let itemArray = await AsyncStorage.getItem('cartItems');
     itemArray = JSON.parse(itemArray);
+    console.log(itemArray);
     if (itemArray) {
       let array = itemArray;
       array.push(id);
 
       try {
         await AsyncStorage.setItem('cartItems', JSON.stringify(array));
-        ToastAndroid.show(
-          'Item Added Successfully to cart',
-          ToastAndroid.SHORT,
-        );
+
         navigation.navigate('HomeScreen');
       } catch (error) {
         return error;
@@ -47,10 +46,7 @@ const DetailScreen = ({navigation, route, onPress}) => {
       array.push(id);
       try {
         await AsyncStorage.setItem('cartItems', JSON.stringify(array));
-        ToastAndroid.show(
-          'Item Added Successfully to cart',
-          ToastAndroid.SHORT,
-        );
+
         navigation.navigate('HomeScreen');
       } catch (error) {
         return error;
@@ -85,7 +81,10 @@ const DetailScreen = ({navigation, route, onPress}) => {
         </View>
       </ImageBackground>
       <View>
-        <TouchableOpacity activeOpacity={0.9} style={styles.iconContainer}>
+        <TouchableOpacity
+          activeOpacity={0.9}
+          style={styles.iconContainer}
+          onPress={() => navigation.navigate('Map')}>
           <FontAwesomeIcon icon={faLocation} size={28} color={COLORS.white} />
         </TouchableOpacity>
         <View style={{marginTop: 20, paddingHorizontal: 20}}>
