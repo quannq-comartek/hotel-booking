@@ -62,7 +62,7 @@ const DetailScreen = ({navigation, route, onPress}) => {
         paddingBottom: 20,
       }}>
       <StatusBar
-        barStyle="light-content"
+        barStyle="dark-content"
         translucent
         backgroundColor="rgba(0,0,0,0)"
       />
@@ -75,7 +75,7 @@ const DetailScreen = ({navigation, route, onPress}) => {
               color={COLORS.white}
             />
           </TouchableOpacity>
-          <TouchableOpacity onPress={onPress}>
+          <TouchableOpacity onPress={() => addToCartHandler(item.id)}>
             <FontAwesomeIcon icon={faBookmark} size={28} color={COLORS.white} />
           </TouchableOpacity>
         </View>
@@ -84,7 +84,7 @@ const DetailScreen = ({navigation, route, onPress}) => {
         <TouchableOpacity
           activeOpacity={0.9}
           style={styles.iconContainer}
-          onPress={() => navigation.navigate('Map')}>
+          onPress={() => navigation.navigate('Map', item)}>
           <FontAwesomeIcon icon={faLocation} size={28} color={COLORS.white} />
         </TouchableOpacity>
         <View style={{marginTop: 20, paddingHorizontal: 20}}>
@@ -157,7 +157,8 @@ const DetailScreen = ({navigation, route, onPress}) => {
           </View>
         </View>
         <View style={styles.btn}>
-          <TouchableOpacity onPress={() => addToCartHandler(item.id)}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('CheckoutScreen', item)}>
             <Text
               style={{color: COLORS.white, fontSize: 18, fontWeight: 'bold'}}>
               Book Now

@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
   card: {
     height: 280,
     width: cardWidth,
-    elevation: 15,
+    elevation: 5,
     marginRight: 20,
     borderRadius: 15,
     backgroundColor: COLORS.white,
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 15,
   },
   cardDetails: {
-    height: 100,
+    height: 120,
     width: '100%',
     borderRadius: 15,
     backgroundColor: COLORS.white,

@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   ScrollView,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 
@@ -20,13 +21,15 @@ import COLORS from '../constants/colors';
 
 const CartList = ({navigation}) => {
   const [product, setProduct] = useState([]);
-  const [total, setTotal] = useState(null);
+  //const [total, setTotal] = useState(null);
 
   useEffect(() => {
-    getData();
+    const unsubscribe = navigation.addListener('focus', () => {
+      getData();
+    });
 
-    // return unsubscribe;
-  }, [getData]);
+    return unsubscribe;
+  }, [getData, navigation]);
 
   const getData = async () => {
     let items = await AsyncStorage.getItem('cartItems');
@@ -39,26 +42,26 @@ const CartList = ({navigation}) => {
         if (items.includes(datas.id)) {
           productData.push(datas);
 
-          return productData;
+          return;
         }
       });
       setProduct(productData);
       //console.log(productData);
-      getTotal(productData);
+      //getTotal(productData);
     } else {
       setProduct([]);
-      getTotal(false);
+      //getTotal(false);
     }
   };
 
-  const getTotal = productData => {
-    let total1 = 0;
-    for (let i = 0; i < productData.length; i++) {
-      let productPrice = productData[i].productPrice;
-      total1 = total + productPrice;
-    }
-    setTotal(total1);
-  };
+  // const getTotal = productData => {
+  //   let total1 = 0;
+  //   for (let i = 0; i < productData.length; i++) {
+  //     let productPrice = productData[i].productPrice;
+  //     total1 = total + productPrice;
+  //   }
+  //   setTotal(total1);
+  // };
 
   const removeItemHandler = async id => {
     let itemArray = await AsyncStorage.getItem('cartItems');
@@ -68,18 +71,16 @@ const CartList = ({navigation}) => {
       for (let i = 0; i < array.length; i++) {
         if (array[i] === id) {
           array.splice(i, 1);
-          // array.filter(arr => arr[i] !== id);
-          // return array;
         }
         await AsyncStorage.setItem('cartItems', JSON.stringify(array));
-        //console.log(array);
+
         getData();
       }
     }
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{marginTop: Platform.OS === 'android' ? 50 : 0}}>
       <ScrollView>
         <TouchableOpacity
           style={{
@@ -106,6 +107,7 @@ const CartList = ({navigation}) => {
                 hotel={item}
                 key={index}
                 onPress2={() => removeItemHandler(item.id)}
+                onPress1={() => navigation.navigate('DetailScreen', item)}
               />
             );
           })}

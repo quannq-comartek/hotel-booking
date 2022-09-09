@@ -10,6 +10,8 @@ import {
   FlatList,
   ScrollView,
   TouchableOpacity,
+  Platform,
+  StatusBar,
 } from 'react-native';
 import React, {useState} from 'react';
 import COLORS from '../constants/colors';
@@ -34,7 +36,13 @@ const HomeScreen = ({navigation}) => {
   // };
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
+    <SafeAreaView
+      style={{
+        flex: 1,
+        backgroundColor: COLORS.white,
+        marginTop: Platform.OS === 'android' ? 30 : 0,
+      }}>
+      <StatusBar barStyle="dark-content" />
       <ScrollView>
         <View style={styles.header}>
           <View

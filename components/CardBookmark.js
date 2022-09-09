@@ -7,9 +7,9 @@ import COLORS from '../constants/colors';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faTrash, faStar} from '@fortawesome/free-solid-svg-icons';
 
-const CardBookmark = ({hotel, onPress2}) => {
+const CardBookmark = ({hotel, onPress2, onPress1}) => {
   return (
-    <TouchableOpacity activeOpacity={0.5} style={{}}>
+    <TouchableOpacity onPress={onPress1} activeOpacity={0.5} style={{}}>
       <View style={styles.container}>
         <View style={styles.card}>
           <Image source={hotel.image} style={styles.cardImage} />
@@ -21,9 +21,9 @@ const CardBookmark = ({hotel, onPress2}) => {
                 <Text style={{fontWeight: 'bold', fontSize: 17}}>
                   {hotel.name}
                 </Text>
-                <Text style={{color: COLORS.grey, fontSize: 12}}>
+                {/* <Text style={{color: COLORS.grey, fontSize: 12}}>
                   {hotel.location}
-                </Text>
+                </Text> */}
 
                 <Text
                   style={{

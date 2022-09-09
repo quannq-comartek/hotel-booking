@@ -12,6 +12,7 @@ import DetailScreen from './screens/DetailScreen';
 import ListScreen from './screens/ListScreen';
 import BookmarkScreen from './screens/BookmarkScreen';
 import Map from './screens/Map';
+import CheckoutScreen from './screens/CheckoutScreen';
 
 import {library} from '@fortawesome/fontawesome-svg-core';
 import {fab} from '@fortawesome/free-brands-svg-icons';
@@ -20,9 +21,23 @@ import {
   faHouse,
   faUser,
   faBookmark,
+  faLocationDot,
+  faArrowCircleLeft,
+  faPhone,
+  faEyeSlash,
 } from '@fortawesome/free-solid-svg-icons';
 
-library.add(fab, faCalendarDays, faHouse, faUser, faBookmark);
+library.add(
+  fab,
+  faCalendarDays,
+  faHouse,
+  faUser,
+  faBookmark,
+  faLocationDot,
+  faArrowCircleLeft,
+  faPhone,
+  faEyeSlash,
+);
 
 const Stack = createStackNavigator();
 
@@ -39,6 +54,7 @@ const App = () => {
         <Stack.Screen name="BookmarkScreen" component={Tabs} />
         <Stack.Screen name="UserScreen" component={Tabs} />
         <Stack.Screen name="Map" component={Map} />
+        <Stack.Screen name="CheckoutScreen" component={CheckoutScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
