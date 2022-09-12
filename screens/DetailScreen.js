@@ -8,7 +8,6 @@ import {
   ImageBackground,
   StyleSheet,
   TouchableOpacity,
-  ToastAndroid,
 } from 'react-native';
 import React from 'react';
 import COLORS from '../constants/colors';
@@ -21,6 +20,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Comments from '../components/Comments';
 
 const DetailScreen = ({navigation, route, onPress}) => {
   const item = route.params;
@@ -29,7 +29,6 @@ const DetailScreen = ({navigation, route, onPress}) => {
   const addToCartHandler = async id => {
     let itemArray = await AsyncStorage.getItem('cartItems');
     itemArray = JSON.parse(itemArray);
-    console.log(itemArray);
     if (itemArray) {
       let array = itemArray;
       array.push(id);
@@ -166,6 +165,7 @@ const DetailScreen = ({navigation, route, onPress}) => {
           </TouchableOpacity>
         </View>
       </View>
+      <Comments />
     </ScrollView>
   );
 };

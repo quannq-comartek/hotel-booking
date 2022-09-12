@@ -8,6 +8,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 
 import BookmarkScreen from '../screens/BookmarkScreen';
 import UserScreen from '../screens/UserScreen';
+import StatusBookingScreen from '../screens/StatusBookingScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -37,7 +38,7 @@ const Tabs = () => {
                 />
               );
 
-            case 'Checkout':
+            case 'StatusBookingScreen':
               return (
                 <FontAwesomeIcon
                   icon="fa-calendar-days"
@@ -66,11 +67,11 @@ const Tabs = () => {
         name="Bookmark"
         component={BookmarkScreen}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         options={{tabBarShowLabel: false}}
-        name="Checkout"
-        component={HomeScreen}
-      />
+        name="StatusBookingScreen"
+        component={StatusBookingScreen}
+      /> */}
       <Tab.Screen
         options={{tabBarShowLabel: false}}
         name="User"

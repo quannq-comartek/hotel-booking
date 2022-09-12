@@ -31,10 +31,6 @@ const HomeScreen = ({navigation}) => {
 
   const scrollX = React.useRef(new Animated.Value(0)).current;
 
-  // const addToBookMarkHandler = () => {
-  //   setBookMark(prev => [...prev, bookMark]);
-  // };
-
   return (
     <SafeAreaView
       style={{
@@ -48,6 +44,9 @@ const HomeScreen = ({navigation}) => {
           <View
             style={{
               paddingBottom: 15,
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
             }}>
             <View>
               <Text style={{fontSize: 30, fontWeight: 'bold'}}>
@@ -65,6 +64,14 @@ const HomeScreen = ({navigation}) => {
                 </Text>
               </View>
             </View>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('StatusBookingScreen')}>
+              <FontAwesomeIcon
+                icon="fa-calendar-days"
+                size={25}
+                color={COLORS.xanh}
+              />
+            </TouchableOpacity>
           </View>
           <View>
             <View style={styles.searchContainer}>

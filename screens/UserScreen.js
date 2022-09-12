@@ -12,6 +12,7 @@ import {
   Switch,
 } from 'react-native';
 import React, {useState} from 'react';
+import ImagePicker from 'react-native-image-crop-picker';
 
 import profiles from '../constants/profile';
 import COLORS from '../constants/colors';
@@ -28,6 +29,16 @@ const UserScreen = () => {
 
   const toggleEdit = name => {
     setEditing(!editing ? name : null);
+  };
+
+  const takePhotoFromLib = () => {
+    ImagePicker.openPicker({
+      width: 70,
+      height: 70,
+      cropping: true,
+    }).then(image => {
+      console.log(image);
+    });
   };
 
   const renderEdit = name => {
@@ -53,7 +64,7 @@ const UserScreen = () => {
           marginTop: 60,
         }}>
         <Text style={{fontSize: 30, fontWeight: 'bold'}}>User</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={takePhotoFromLib}>
           <Image source={profiles.avatar} style={styles.avatar} />
         </TouchableOpacity>
       </View>
@@ -74,7 +85,12 @@ const UserScreen = () => {
               {renderEdit('username')}
             </View>
             <Text
-              style={{color: COLORS.xanh, fontSize: 15, marginTop: 30}}
+              style={{
+                color: COLORS.xanh,
+                fontSize: 15,
+                marginTop: 30,
+                fontWeight: 'bold',
+              }}
               onPress={() => toggleEdit('username')}>
               {editing === 'username' ? 'Save' : 'Edit'}
             </Text>
@@ -94,7 +110,12 @@ const UserScreen = () => {
               {renderEdit('location')}
             </View>
             <Text
-              style={{color: COLORS.xanh, fontSize: 15, marginTop: 30}}
+              style={{
+                color: COLORS.xanh,
+                fontSize: 15,
+                marginTop: 30,
+                fontWeight: 'bold',
+              }}
               onPress={() => toggleEdit('location')}>
               {editing === 'location' ? 'Save' : 'Edit'}
             </Text>

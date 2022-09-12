@@ -1,12 +1,13 @@
 /* eslint-disable react-native/no-inline-styles */
 import {Platform, SafeAreaView, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import COLORS from '../constants/colors';
 import Login from '../components/Login';
 import Button from '../components/Button';
 import {faEnvelope, faLock} from '@fortawesome/free-solid-svg-icons';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
+import {storeData, getData} from '../hooks/useAsyncStorage';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label('Email'),
@@ -26,6 +27,7 @@ const LoginScreen = ({navigation}) => {
       <View style={styles.footer}>
         <Formik
           initialValues={{email: '', password: ''}}
+          enableReinitialize
           onSubmit={() => navigation.navigate('HomeScreen')}
           validationSchema={validationSchema}>
           {({handleChange, handleSubmit, errors, setFieldTouched, touched}) => (
@@ -79,15 +81,6 @@ const LoginScreen = ({navigation}) => {
           )}
         </Formik>
       </View>
-
-      {/* <View style={styles.textQuestion}>
-        <Text style={styles.text}>Create an account?</Text>
-        <Button
-          title="Sign up"
-          onPress={() => navigation.navigate('RegisterScreen')}
-          color={COLORS.bacha}
-        />
-      </View> */}
     </SafeAreaView>
   );
 };

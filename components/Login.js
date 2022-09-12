@@ -16,7 +16,7 @@ const Login = ({placeholder, icon, name, ...otherProps}) => {
 
   return (
     <View style={styles.container}>
-      <Text>{name}</Text>
+      {name && <Text>{name}</Text>}
       <View
         style={{
           flexDirection: 'row',
@@ -24,8 +24,10 @@ const Login = ({placeholder, icon, name, ...otherProps}) => {
           borderBottomWidth: 1,
           borderBottomColor: '#f2f2f2',
           paddingBottom: 5,
+          justifyContent: 'center',
+          alignItems: 'center',
         }}>
-        <FontAwesomeIcon icon={icon} size={20} style={styles.icon} />
+        {icon && <FontAwesomeIcon icon={icon} size={20} style={styles.icon} />}
         <TextInput
           placeholder={placeholder}
           style={styles.textInput}

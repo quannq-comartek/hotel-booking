@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import {Platform, SafeAreaView, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import COLORS from '../constants/colors';
 import Login from '../components/Login';
 import Button from '../components/Button';
@@ -22,6 +22,11 @@ const validationSchema = Yup.object().shape({
 });
 
 const RegisterScreen = ({navigation}) => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [checkPassword, setCheckPassword] = useState('');
+
   const naviLogin = () => {
     navigation.navigate('LoginScreen');
   };

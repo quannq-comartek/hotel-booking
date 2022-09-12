@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faBookmark, faStar} from '@fortawesome/free-solid-svg-icons';
+import {faStar} from '@fortawesome/free-solid-svg-icons';
 
 import COLORS from '../constants/colors';
 
@@ -53,13 +53,6 @@ const Card = ({hotel, index, onPress, scrollX, onPress1}) => {
                 {hotel.location}
               </Text>
             </View>
-            <TouchableOpacity onPress={onPress1}>
-              <FontAwesomeIcon
-                icon={faBookmark}
-                size={26}
-                style={{color: COLORS.grey}}
-              />
-            </TouchableOpacity>
           </View>
 
           <View

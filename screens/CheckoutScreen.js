@@ -1,15 +1,47 @@
 /* eslint-disable react-native/no-inline-styles */
 import {View, StyleSheet, SafeAreaView, Platform, Text} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import CardBookmark from '../components/CardBookmark';
 
 import COLORS from '../constants/colors';
 import Button from '../components/Button';
+import ModalCustom from '../components/ModalCustom';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // CHUA XONG PHAN BUTTON CHECKOUT
 
 const CheckoutScreen = ({route, navigation}) => {
   const item = route.params;
+
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const addToCartHandler = async id => {
+    let itemArray = await AsyncStorage.getItem('orderItem');
+    itemArray = JSON.parse(itemArray);
+    if (itemArray) {
+      let array = itemArray;
+      array.push(id);
+
+      try {
+        await AsyncStorage.setItem('orderItem', JSON.stringify(array));
+
+        navigation.navigate('HomeScreen');
+      } catch (error) {
+        return error;
+      }
+    } else {
+      let array = [];
+      array.push(id);
+      try {
+        await AsyncStorage.setItem('orderItem', JSON.stringify(array));
+
+        navigation.navigate('HomeScreen');
+      } catch (error) {
+        return error;
+      }
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -109,9 +141,13 @@ const CheckoutScreen = ({route, navigation}) => {
           title="Checkout"
           color="xanh"
           colors="white"
-          onPress={() => navigation.navigate('HomeScreen')}
+          onPress={() => addToCartHandler(item.id)}
         />
       </View>
+      {/* <ModalCustom
+        visible={modalOpen}
+        onPress={() => navigation.navigate('StatusBookingScreen')}
+      /> */}
     </SafeAreaView>
   );
 };
