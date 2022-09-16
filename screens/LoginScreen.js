@@ -1,5 +1,14 @@
 /* eslint-disable react-native/no-inline-styles */
-import {Platform, SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import {
+  ImageBackground,
+  Platform,
+  SafeAreaView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
 import React, {useState} from 'react';
 import COLORS from '../constants/colors';
 import Login from '../components/Login';
@@ -21,9 +30,14 @@ const LoginScreen = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
+      <StatusBar barStyle="dark-content" />
+      {/* <View style={styles.header}> */}
+      <ImageBackground
+        source={require('../assets/images/onboardImage.jpeg')}
+        style={styles.header}>
         <Text style={styles.title}>HomeStay</Text>
-      </View>
+      </ImageBackground>
+      {/* </View> */}
       <View style={styles.footer}>
         <Formik
           initialValues={{email: '', password: ''}}
@@ -33,8 +47,6 @@ const LoginScreen = ({navigation}) => {
           {({handleChange, handleSubmit, errors, setFieldTouched, touched}) => (
             <View style={styles.formLogin}>
               <Login
-                textContentType="emailAddress"
-                keybroadType="email-address"
                 icon={faEnvelope}
                 onChangeText={handleChange('email')}
                 onBlur={() => setFieldTouched('email')}
@@ -45,7 +57,6 @@ const LoginScreen = ({navigation}) => {
                 <Text style={{color: 'red'}}>{errors.email}</Text>
               )}
               <Login
-                textContentType="password"
                 icon={faLock}
                 onChangeText={handleChange('password')}
                 onBlur={() => setFieldTouched('password')}
@@ -55,28 +66,22 @@ const LoginScreen = ({navigation}) => {
               {touched.password && (
                 <Text style={{color: 'red'}}>{errors.password}</Text>
               )}
-              <View
-                style={{
-                  position: 'absolute',
-                  top: Platform.OS === 'android' ? 200 : 175,
-                  right: 0,
-                  marginTop: 10,
-                }}>
+
+              <View style={{marginTop: 5}}>
+                <Button colors="white" title="Login" onPress={handleSubmit} />
                 <Button
                   color="white"
                   colors="xanh"
-                  fontSize={10}
+                  title="Sign up"
+                  onPress={sigupNavi}
+                />
+                <Button
+                  color="white"
+                  colors="grey"
+                  fontSize={13}
                   title="Forgot your password"
                 />
               </View>
-
-              <Button colors="white" title="Login" onPress={handleSubmit} />
-              <Button
-                color="white"
-                colors="xanh"
-                title="Sign up"
-                onPress={sigupNavi}
-              />
             </View>
           )}
         </Formik>
@@ -88,7 +93,7 @@ const LoginScreen = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.xanh,
+    // backgroundColor: COLORS.xanh,
     paddingTop: Platform.OS === 'android' ? 30 : 0,
   },
 
@@ -100,7 +105,7 @@ const styles = StyleSheet.create({
   },
 
   footer: {
-    flex: 4,
+    flex: 3,
     backgroundColor: COLORS.white,
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,

@@ -13,23 +13,64 @@ import {
   Platform,
   StatusBar,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import COLORS from '../constants/colors';
 
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faSearch} from '@fortawesome/free-solid-svg-icons';
 import {TextInput} from 'react-native-gesture-handler';
-import data from '../constants/data';
+//import data from '../constants/data';
 import Card from '../components/Card';
 import TopHotelCard from '../components/TopHotelCard';
+
+import * as apiServices from '../services/apiServices';
+import axios from 'axios';
 
 let {width} = Dimensions.get('screen');
 let cardWidth = width / 1.8;
 
 const HomeScreen = ({navigation}) => {
-  const [bookMark, setBookMark] = useState([]);
+  const [data, setData] = useState();
 
   const scrollX = React.useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    getHotelFull();
+  }, []);
+
+  // const getHotelFull = async () => {
+  //   let results = await apiServices.getHotel();
+  //   setData(results);
+  //   console.log('getHotelFull', results);
+  // };
+
+  const getHotelFull = async () => {
+    axios
+      .get('https://63200369e3bdd81d8ef08100.mockapi.io/hotelbooking/hotel', {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Accept: 'application/json',
+      })
+      .then(res => {
+        //console.log(res);
+        setData(res.data);
+      })
+      .catch(error => console.log(error));
+  };
+
+  const getHotelId = async id => {
+    axios
+      .get(
+        `https://63200369e3bdd81d8ef08100.mockapi.io/hotelbooking/hotel/${id}`,
+        {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          Accept: 'application/json',
+        },
+      )
+      .then(res => {
+        console.log('getHotalId', res);
+      })
+      .catch(error => console.log(error));
+  };
 
   return (
     <SafeAreaView
@@ -64,16 +105,16 @@ const HomeScreen = ({navigation}) => {
                 </Text>
               </View>
             </View>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               onPress={() => navigation.navigate('StatusBookingScreen')}>
               <FontAwesomeIcon
                 icon="fa-calendar-days"
                 size={25}
                 color={COLORS.xanh}
               />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
-          <View>
+          <TouchableOpacity onPress={() => navigation.navigate('ListScreen')}>
             <View style={styles.searchContainer}>
               <FontAwesomeIcon
                 icon={faSearch}
@@ -85,7 +126,7 @@ const HomeScreen = ({navigation}) => {
                 style={{fontSize: 20, paddingLeft: 10}}
               />
             </View>
-          </View>
+          </TouchableOpacity>
         </View>
         <View>
           <Text
@@ -115,7 +156,10 @@ const HomeScreen = ({navigation}) => {
                   hotel={item}
                   index={index}
                   scrollX={scrollX}
-                  onPress={() => navigation.navigate('DetailScreen', item)}
+                  onPress={() => {
+                    getHotelId(item.id);
+                    navigation.navigate('DetailScreen', item);
+                  }}
                 />
               )}
               snapToInterval={cardWidth}

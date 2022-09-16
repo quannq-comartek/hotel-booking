@@ -9,7 +9,7 @@ const CardStatus = ({hotel, onPress1}) => {
     <TouchableOpacity onPress={onPress1} activeOpacity={0.5} style={{}}>
       <View style={styles.container}>
         <View style={styles.card}>
-          <Image source={hotel.image} style={styles.cardImage} />
+          <Image source={{uri: hotel.image}} style={styles.cardImage} />
 
           <View style={styles.cardDetails}>
             <View

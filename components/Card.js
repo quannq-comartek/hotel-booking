@@ -41,7 +41,7 @@ const Card = ({hotel, index, onPress, scrollX, onPress1}) => {
             ${hotel.price}
           </Text>
         </View>
-        <Image source={hotel.image} style={styles.cardImage} />
+        <Image source={{uri: hotel.image}} style={styles.cardImage} />
 
         <View style={styles.cardDetails}>
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>

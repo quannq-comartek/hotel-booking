@@ -8,28 +8,64 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import React from 'react';
-import data from '../constants/data';
+import React, {useState, useEffect} from 'react';
+
 import CardList from '../components/CardList';
 
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faSearch, faArrowCircleLeft} from '@fortawesome/free-solid-svg-icons';
+import {faSearch, faArrowLeft} from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
 
 import COLORS from '../constants/colors';
 
 const ListScreen = ({navigation}) => {
+  const [search, setSearch] = useState('');
+  const [data, setData] = useState();
+
+  const searchFilter = text => {
+    if (text) {
+      const newData = data.filter(item => {
+        const itemData = item.name ? item.name.toUpperCase() : ''.toUpperCase();
+        const textData = text.toUpperCase();
+
+        return itemData.indexOf(textData) > -1;
+        //return item.name.toLowerCase().includes(text.toLowerCase());
+      });
+      setData(newData);
+      setSearch(text);
+    } else {
+      setData(data);
+      setSearch(text);
+    }
+  };
+
+  useEffect(() => {
+    getHotelFull();
+  }, []);
+
+  const getHotelFull = async () => {
+    axios
+      .get('https://63200369e3bdd81d8ef08100.mockapi.io/hotelbooking/hotel', {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Accept: 'application/json',
+      })
+      .then(res => {
+        setData(res.data);
+      })
+      .catch(error => console.log(error));
+  };
+
   return (
     <SafeAreaView>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={{marginTop: 20, marginHorizontal: 20}}>
-          <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')}>
-            <FontAwesomeIcon
-              icon={faArrowCircleLeft}
-              size={30}
-              color={COLORS.xanh}
-            />
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity
+          style={{
+            paddingHorizontal: 20,
+            marginTop: 50,
+          }}
+          onPress={() => navigation.goBack()}>
+          <FontAwesomeIcon icon={faArrowLeft} size={28} color={COLORS.xanh} />
+        </TouchableOpacity>
         <View>
           <View style={styles.searchContainer}>
             <FontAwesomeIcon
@@ -40,13 +76,20 @@ const ListScreen = ({navigation}) => {
             <TextInput
               placeholder="Search"
               style={{fontSize: 20, paddingLeft: 10}}
+              value={search}
+              onChangeText={text => searchFilter(text)}
             />
           </View>
         </View>
         <FlatList
           data={data}
           keyExtractor={list => list.id.toString()}
-          renderItem={({item}) => <CardList hotel={item} />}
+          renderItem={({item}) => (
+            <CardList
+              hotel={item}
+              onPress={() => navigation.navigate('DetailScreen', item)}
+            />
+          )}
         />
       </ScrollView>
     </SafeAreaView>

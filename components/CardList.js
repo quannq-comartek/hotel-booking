@@ -1,5 +1,12 @@
 /* eslint-disable react-native/no-inline-styles */
-import {View, Text, StyleSheet, Image, Platform} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  Platform,
+  TouchableOpacity,
+} from 'react-native';
 import React from 'react';
 
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
@@ -7,44 +14,48 @@ import {faBookmark, faStar} from '@fortawesome/free-solid-svg-icons';
 
 import COLORS from '../constants/colors';
 
-const CardList = ({hotel}) => {
+const CardList = ({hotel, onPress}) => {
   return (
-    <View style={styles.card}>
-      <View style={styles.priceTag}>
-        <Text style={{color: COLORS.white, fontSize: 20, fontWeight: 'bold'}}>
-          ${hotel.price}
-        </Text>
-      </View>
-      <Image source={hotel.image} style={styles.cardImage} />
-
-      <View style={styles.cardDetails}>
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-          <View>
-            <Text style={{fontWeight: 'bold', fontSize: 17}}>{hotel.name}</Text>
-            <Text style={{color: COLORS.grey, fontSize: 12}}>
-              {hotel.location}
-            </Text>
-          </View>
-          <FontAwesomeIcon icon={faBookmark} size={26} />
+    <TouchableOpacity onPress={onPress}>
+      <View style={styles.card}>
+        <View style={styles.priceTag}>
+          <Text style={{color: COLORS.white, fontSize: 20, fontWeight: 'bold'}}>
+            ${hotel.price}
+          </Text>
         </View>
+        <Image source={{uri: hotel.image}} style={styles.cardImage} />
 
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginTop: 10,
-          }}>
-          <View style={{flexDirection: 'row'}}>
-            <FontAwesomeIcon icon={faStar} size={15} color="#f1c40f" />
-            <FontAwesomeIcon icon={faStar} size={15} color="#f1c40f" />
-            <FontAwesomeIcon icon={faStar} size={15} color="#f1c40f" />
-            <FontAwesomeIcon icon={faStar} size={15} color="#f1c40f" />
-            <FontAwesomeIcon icon={faStar} size={15} color="#f1c40f" />
+        <View style={styles.cardDetails}>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <View>
+              <Text style={{fontWeight: 'bold', fontSize: 17}}>
+                {hotel.name}
+              </Text>
+              <Text style={{color: COLORS.grey, fontSize: 12}}>
+                {hotel.location}
+              </Text>
+            </View>
+            {/* <FontAwesomeIcon icon={faBookmark} size={26} /> */}
           </View>
-          <Text style={{fontSize: 10, color: COLORS.grey}}>365 reviews</Text>
+
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              marginTop: 10,
+            }}>
+            <View style={{flexDirection: 'row'}}>
+              <FontAwesomeIcon icon={faStar} size={15} color="#f1c40f" />
+              <FontAwesomeIcon icon={faStar} size={15} color="#f1c40f" />
+              <FontAwesomeIcon icon={faStar} size={15} color="#f1c40f" />
+              <FontAwesomeIcon icon={faStar} size={15} color="#f1c40f" />
+              <FontAwesomeIcon icon={faStar} size={15} color="#f1c40f" />
+            </View>
+            <Text style={{fontSize: 10, color: COLORS.grey}}>365 reviews</Text>
+          </View>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

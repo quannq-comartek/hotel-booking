@@ -12,7 +12,7 @@ const CardBookmark = ({hotel, onPress2, onPress1}) => {
     <TouchableOpacity onPress={onPress1} activeOpacity={0.5} style={{}}>
       <View style={styles.container}>
         <View style={styles.card}>
-          <Image source={hotel.image} style={styles.cardImage} />
+          <Image source={{uri: hotel.image}} style={styles.cardImage} />
 
           <View style={styles.cardDetails}>
             <View
@@ -51,9 +51,9 @@ const CardBookmark = ({hotel, onPress2, onPress1}) => {
               </View>
             </View>
           </View>
-          <TouchableOpacity onPress={onPress2}>
+          {/* <TouchableOpacity onPress={onPress2}>
             <FontAwesomeIcon icon={faTrash} size={20} />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </View>
     </TouchableOpacity>

@@ -21,9 +21,10 @@ const UserScreen = () => {
   const [profile, setProfile] = useState({});
   const [editing, setEditing] = useState(null);
   const [noti, setNoti] = useState(true);
+  const [avatarUser, setAvatarUser] = useState('');
 
   const handleEdit = (name, text) => {
-    profile[name] = text;
+    profiles[name] = text;
     setProfile(profile);
   };
 
@@ -37,7 +38,7 @@ const UserScreen = () => {
       height: 70,
       cropping: true,
     }).then(image => {
-      console.log(image);
+      setAvatarUser(image.path);
     });
   };
 
@@ -65,7 +66,11 @@ const UserScreen = () => {
         }}>
         <Text style={{fontSize: 30, fontWeight: 'bold'}}>User</Text>
         <TouchableOpacity onPress={takePhotoFromLib}>
-          <Image source={profiles.avatar} style={styles.avatar} />
+          {avatarUser ? (
+            <Image source={{uri: avatarUser}} style={styles.avatar} />
+          ) : (
+            <Image source={profiles.avatar} style={styles.avatar} />
+          )}
         </TouchableOpacity>
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>

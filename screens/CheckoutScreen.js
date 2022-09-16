@@ -9,38 +9,56 @@ import ModalCustom from '../components/ModalCustom';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import axios from 'axios';
+
 // CHUA XONG PHAN BUTTON CHECKOUT
 
 const CheckoutScreen = ({route, navigation}) => {
   const item = route.params;
 
-  const [modalOpen, setModalOpen] = useState(false);
+  const [checkout, setCheckout] = useState({
+    name: item.name,
+    price: item.price,
+    image: item.image,
+  });
 
-  const addToCartHandler = async id => {
-    let itemArray = await AsyncStorage.getItem('orderItem');
-    itemArray = JSON.parse(itemArray);
-    if (itemArray) {
-      let array = itemArray;
-      array.push(id);
+  // const addToCartHandler = async id => {
+  //   let itemArray = await AsyncStorage.getItem('orderItem');
+  //   itemArray = JSON.parse(itemArray);
+  //   if (itemArray) {
+  //     let array = itemArray;
+  //     array.push(id);
 
-      try {
-        await AsyncStorage.setItem('orderItem', JSON.stringify(array));
+  //     try {
+  //       await AsyncStorage.setItem('orderItem', JSON.stringify(array));
 
+  //       navigation.navigate('HomeScreen');
+  //     } catch (error) {
+  //       return error;
+  //     }
+  //   } else {
+  //     let array = [];
+  //     array.push(id);
+  //     try {
+  //       await AsyncStorage.setItem('orderItem', JSON.stringify(array));
+
+  //       navigation.navigate('HomeScreen');
+  //     } catch (error) {
+  //       return error;
+  //     }
+  //   }
+  // };
+
+  const addCheckoutHandler = async () => {
+    axios
+      .post(
+        'https://63200369e3bdd81d8ef08100.mockapi.io/hotelbooking/order',
+        checkout,
+      )
+      .then(res => {
+        console.log(res);
         navigation.navigate('HomeScreen');
-      } catch (error) {
-        return error;
-      }
-    } else {
-      let array = [];
-      array.push(id);
-      try {
-        await AsyncStorage.setItem('orderItem', JSON.stringify(array));
-
-        navigation.navigate('HomeScreen');
-      } catch (error) {
-        return error;
-      }
-    }
+      });
   };
 
   return (
@@ -141,7 +159,7 @@ const CheckoutScreen = ({route, navigation}) => {
           title="Checkout"
           color="xanh"
           colors="white"
-          onPress={() => addToCartHandler(item.id)}
+          onPress={() => addCheckoutHandler()}
         />
       </View>
       {/* <ModalCustom

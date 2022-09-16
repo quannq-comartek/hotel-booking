@@ -1,19 +1,33 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-native/no-inline-styles */
-import {View, Image, StyleSheet, TouchableOpacity, Text} from 'react-native';
-import React, {useState} from 'react';
+import {
+  View,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  Text,
+  ScrollView,
+  FlatList,
+} from 'react-native';
+import React, {useState, useEffect} from 'react';
 
 import Login from './Login';
 
 import COLORS from '../constants/colors';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import ImagePicker from 'react-native-image-crop-picker';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import axios from 'axios';
 
 const Comments = () => {
   const [comments, setComments] = useState('');
   const [displayComment, setDisplayComment] = useState([]);
   const [images, setImages] = useState('');
+
+  // const [storeValue, setStoreValue] = useState({
+  //   comment: comments,
+  //   image: images,
+  // });
 
   const submitComment = () => {
     setDisplayComment(prev => [
@@ -23,6 +37,14 @@ const Comments = () => {
     setComments('');
     setImages('');
   };
+
+  // useEffect(() => {
+  //   //const unsubscribe = navigation.addListener('focus', () => {
+  //   getComment();
+  //   //});
+
+  //   //return unsubscribe;
+  // }, []);
 
   const uploadImage = () => {
     ImagePicker.openPicker({
@@ -34,29 +56,24 @@ const Comments = () => {
     });
   };
 
-  const addToCommentHandler = async id => {
-    let itemComment = await AsyncStorage.getItem('commentItem');
-    itemComment = JSON.parse(itemComment);
-    if (itemComment) {
-      let array = itemComment;
-      array.push(id);
+  // const submitComment = async () => {
+  //   axios
+  //     .post(
+  //       `https://63200369e3bdd81d8ef08100.mockapi.io/hotelbooking/comments`,
+  //       storeValue,
+  //     )
+  //     .then(res => console.log(res))
+  //     .catch(error => console.log(error));
+  // };
 
-      try {
-        await AsyncStorage.setItem('commentItem', JSON.stringify(array));
-      } catch (error) {
-        return error;
-      }
-    } else {
-      let array = [];
-      array.push(id);
-
-      try {
-        await AsyncStorage.setItem('commentItem', JSON.stringify(array));
-      } catch (error) {
-        return error;
-      }
-    }
-  };
+  // const getComment = async () => {
+  //   axios
+  //     .get(
+  //       `https://63200369e3bdd81d8ef08100.mockapi.io/hotelbooking/${id}/comment`,
+  //     )
+  //     .then(res => setDisplayComment(res.data))
+  //     .catch(error => console.log(error));
+  // };
 
   return (
     <View>
@@ -123,7 +140,6 @@ const Comments = () => {
                     }}
                   />
                 )}
-                {/* Neu ma co anh thi se hien thi o day, nhung ma state thi luon luu anh */}
               </>
             )}
           </View>

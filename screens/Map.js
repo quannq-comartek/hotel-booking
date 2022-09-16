@@ -1,7 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/self-closing-comp */
 import {
-  Platform,
   SafeAreaView,
   StatusBar,
   TouchableOpacity,
@@ -18,30 +17,32 @@ import COLORS from '../constants/colors';
 const Map = ({navigation, route}) => {
   const item = route.params;
 
+  // console.log(item.latitude);
+  // console.log(item.longitude);
+
+  let lat = parseFloat(item.latitude);
+  let long = parseFloat(item.longitude);
+
   const mapView = useRef();
   const [region, setRegion] = useState(null);
   const [location, setLocation] = useState(null);
 
   useEffect(() => {
     let initialRegion = {
-      latitude: item.latitude,
-      longitude: item.longitude,
+      latitude: lat,
+      longitude: long,
       latitudeDelta: 0.02,
       longitudeDelta: 0.02,
     };
-    // 20.994963
-    // 105.802503
-    // 1.5496614931250685
-    // 110.36381866919922
 
     let destination = {
-      latitude: item.latitude,
-      longitude: item.longitude,
+      latitude: lat,
+      longitude: long,
     };
 
     setRegion(initialRegion);
     setLocation(destination);
-  }, [item.latitude, item.longitude]);
+  }, [lat, long]);
 
   const renderMap = () => {
     return (

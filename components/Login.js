@@ -16,7 +16,7 @@ const Login = ({placeholder, icon, name, ...otherProps}) => {
 
   return (
     <View style={styles.container}>
-      {name && <Text>{name}</Text>}
+      {name && <Text style={{fontSize: 20, fontWeight: 'bold'}}>{name}</Text>}
       <View
         style={{
           flexDirection: 'row',
@@ -32,12 +32,22 @@ const Login = ({placeholder, icon, name, ...otherProps}) => {
           placeholder={placeholder}
           style={styles.textInput}
           autoCapitalize="none"
-          secureTextEntry={name === 'Password' ? true : false}
-          //{name === 'Password' ? secureTextEntry={true} : null}
+          secureTextEntry={
+            name === 'Password' || 'Confirm password' ? secureTextEntry : false
+          }
           {...otherProps}
         />
         {name === 'Password' && (
-          <TouchableOpacity style={{position: 'absolute', right: 0}}>
+          <TouchableOpacity
+            style={{position: 'absolute', right: 0}}
+            onPress={() => setSecureTextEntry(prevState => !prevState)}>
+            <FontAwesomeIcon icon="fa-solid fa-eye-slash" size={20} />
+          </TouchableOpacity>
+        )}
+        {name === 'Confirm password' && (
+          <TouchableOpacity
+            style={{position: 'absolute', right: 0}}
+            onPress={() => setSecureTextEntry(prevState => !prevState)}>
             <FontAwesomeIcon icon="fa-solid fa-eye-slash" size={20} />
           </TouchableOpacity>
         )}

@@ -1,5 +1,12 @@
 /* eslint-disable react-native/no-inline-styles */
-import {Platform, SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import {
+  Platform,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import React, {useState} from 'react';
 import COLORS from '../constants/colors';
 import Login from '../components/Login';
@@ -22,10 +29,10 @@ const validationSchema = Yup.object().shape({
 });
 
 const RegisterScreen = ({navigation}) => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [checkPassword, setCheckPassword] = useState('');
+  // const [name, setName] = useState('');
+  // const [email, setEmail] = useState('');
+  // const [password, setPassword] = useState('');
+  // const [checkPassword, setCheckPassword] = useState('');
 
   const naviLogin = () => {
     navigation.navigate('LoginScreen');
@@ -36,6 +43,7 @@ const RegisterScreen = ({navigation}) => {
       <View style={styles.header}>
         <Text style={styles.title}>HomeStay</Text>
       </View>
+
       <View style={styles.footer}>
         <Formik
           initialValues={{
@@ -44,7 +52,9 @@ const RegisterScreen = ({navigation}) => {
             password: '',
             changepassword: '',
           }}
-          onSubmit={() => navigation.navigate('LoginScreen')}
+          onSubmit={async () => {
+            navigation.navigate('LoginScreen');
+          }}
           validationSchema={validationSchema}>
           {({
             values,
@@ -54,7 +64,9 @@ const RegisterScreen = ({navigation}) => {
             setFieldTouched,
             touched,
           }) => (
-            <View style={styles.formLogin}>
+            <ScrollView
+              showsVerticalScrollIndicator={false}
+              style={styles.formLogin}>
               <Login
                 placeholder="Name"
                 icon={faUser}
@@ -112,7 +124,7 @@ const RegisterScreen = ({navigation}) => {
                 title="Already have account"
                 onPress={naviLogin}
               />
-            </View>
+            </ScrollView>
           )}
         </Formik>
       </View>
@@ -134,7 +146,7 @@ const styles = StyleSheet.create({
   },
 
   footer: {
-    flex: 4,
+    flex: 14,
     backgroundColor: COLORS.white,
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,

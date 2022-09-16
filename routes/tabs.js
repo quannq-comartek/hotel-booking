@@ -67,11 +67,12 @@ const Tabs = () => {
         name="Bookmark"
         component={BookmarkScreen}
       />
-      {/* <Tab.Screen
-        options={{tabBarShowLabel: false}}
+      <Tab.Screen
+        //options={{tabBarShowLabel: false}}
         name="StatusBookingScreen"
         component={StatusBookingScreen}
-      /> */}
+        options={{tabBarShowLabel: false}}
+      />
       <Tab.Screen
         options={{tabBarShowLabel: false}}
         name="User"

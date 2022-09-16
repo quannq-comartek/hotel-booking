@@ -9,7 +9,7 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import COLORS from '../constants/colors';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {
@@ -19,38 +19,33 @@ import {
   faStar,
 } from '@fortawesome/free-solid-svg-icons';
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
+//import AsyncStorage from '@react-native-async-storage/async-storage';
 import Comments from '../components/Comments';
+import axios from 'axios';
 
 const DetailScreen = ({navigation, route, onPress}) => {
   const item = route.params;
-  //console.log(item);
 
-  const addToCartHandler = async id => {
-    let itemArray = await AsyncStorage.getItem('cartItems');
-    itemArray = JSON.parse(itemArray);
-    if (itemArray) {
-      let array = itemArray;
-      array.push(id);
+  const [storeValue, setStoreValue] = useState({
+    name: item.name,
+    price: item.price,
+    image: item.image,
+  });
+  const [touched, setTouched] = useState(false);
 
-      try {
-        await AsyncStorage.setItem('cartItems', JSON.stringify(array));
+  const addToBookmark = async () => {
+    axios
+      .post(
+        'https://63200369e3bdd81d8ef08100.mockapi.io/hotelbooking/bookmark',
 
-        navigation.navigate('HomeScreen');
-      } catch (error) {
-        return error;
-      }
-    } else {
-      let array = [];
-      array.push(id);
-      try {
-        await AsyncStorage.setItem('cartItems', JSON.stringify(array));
-
-        navigation.navigate('HomeScreen');
-      } catch (error) {
-        return error;
-      }
-    }
+        storeValue,
+      )
+      .then(res => {
+        console.log(res);
+        if (res) {
+          setTouched(true);
+        }
+      });
   };
 
   return (
@@ -65,17 +60,21 @@ const DetailScreen = ({navigation, route, onPress}) => {
         translucent
         backgroundColor="rgba(0,0,0,0)"
       />
-      <ImageBackground source={item.image} style={styles.headerImage}>
+      <ImageBackground source={{uri: item.image}} style={styles.headerImage}>
         <View style={styles.header}>
           <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')}>
             <FontAwesomeIcon
               icon={faArrowCircleLeft}
-              size={28}
-              color={COLORS.white}
+              size={35}
+              color={COLORS.xanh}
             />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => addToCartHandler(item.id)}>
-            <FontAwesomeIcon icon={faBookmark} size={28} color={COLORS.white} />
+          <TouchableOpacity onPress={() => addToBookmark()}>
+            <FontAwesomeIcon
+              icon={faBookmark}
+              size={28}
+              color={touched ? '#f1c40f' : COLORS.white}
+            />
           </TouchableOpacity>
         </View>
       </ImageBackground>

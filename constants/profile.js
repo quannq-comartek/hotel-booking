@@ -1,7 +1,7 @@
 const profiles = {
-  username: 'react-ui',
-  location: 'Europe',
-  email: 'contact@react-ui-kit.com',
+  username: 'Nguyen Quoc Quan',
+  location: 'Viet Nam',
+  email: 'quannq@comartek.com',
   avatar: require('../assets/images/onboardImage1.jpeg'),
   budget: 1000,
   monthly_cap: 5000,

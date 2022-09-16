@@ -21,7 +21,7 @@ const TopHotelCard = ({hotel}) => {
           5.0
         </Text>
       </View>
-      <Image source={hotel.image} style={styles.topHotelCardImage} />
+      <Image source={{uri: hotel.image}} style={styles.topHotelCardImage} />
       <View style={{paddingVertical: 10, paddingHorizontal: 10}}>
         <Text style={{fontSize: 15, fontWeight: 'bold'}}>{hotel.name}</Text>
         <Text style={{fontSize: 10, fontWeight: 'bold', color: COLORS.primary}}>

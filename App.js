@@ -28,6 +28,9 @@ import {
   faPhone,
   faEyeSlash,
   faCamera,
+  faRocket,
+  faTrash,
+  faEye,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -41,6 +44,9 @@ library.add(
   faPhone,
   faEyeSlash,
   faCamera,
+  faRocket,
+  faTrash,
+  faEye,
 );
 
 const Stack = createStackNavigator();
@@ -59,10 +65,7 @@ const App = () => {
         <Stack.Screen name="UserScreen" component={Tabs} />
         <Stack.Screen name="Map" component={Map} />
         <Stack.Screen name="CheckoutScreen" component={CheckoutScreen} />
-        <Stack.Screen
-          name="StatusBookingScreen"
-          component={StatusBookingScreen}
-        />
+        <Stack.Screen name="StatusBookingScreen" component={Tabs} />
         <Stack.Screen name="StatusDetail" component={StatusDetail} />
       </Stack.Navigator>
     </NavigationContainer>

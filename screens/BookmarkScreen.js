@@ -9,15 +9,12 @@ import {
   Platform,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
-
-import data from '../constants/data';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 
 import CardBookmark from '../components/CardBookmark';
 
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faArrowLeft} from '@fortawesome/free-solid-svg-icons';
-import COLORS from '../constants/colors';
+import axios from 'axios';
 
 const CartList = ({navigation}) => {
   const [product, setProduct] = useState([]);
@@ -32,63 +29,26 @@ const CartList = ({navigation}) => {
   }, [getData, navigation]);
 
   const getData = async () => {
-    let items = await AsyncStorage.getItem('cartItems');
-    //console.log(items);
-    items = JSON.parse(items);
-    //console.log(items);
-    let productData = [];
-    if (items) {
-      data.forEach(datas => {
-        if (items.includes(datas.id)) {
-          productData.push(datas);
-
-          return;
-        }
-      });
-      setProduct(productData);
-      //console.log(productData);
-      //getTotal(productData);
-    } else {
-      setProduct([]);
-      //getTotal(false);
-    }
+    axios
+      .get('https://63200369e3bdd81d8ef08100.mockapi.io/hotelbooking/bookmark')
+      .then(res => {
+        setProduct(res.data);
+      })
+      .catch(error => console.log(error));
   };
 
-  // const getTotal = productData => {
-  //   let total1 = 0;
-  //   for (let i = 0; i < productData.length; i++) {
-  //     let productPrice = productData[i].productPrice;
-  //     total1 = total + productPrice;
-  //   }
-  //   setTotal(total1);
-  // };
-
-  const removeItemHandler = async id => {
-    let itemArray = await AsyncStorage.getItem('cartItems');
-    itemArray = JSON.parse(itemArray);
-    if (itemArray) {
-      let array = itemArray;
-      for (let i = 0; i < array.length; i++) {
-        if (array[i] === id) {
-          array.splice(i, 1);
-        }
-        await AsyncStorage.setItem('cartItems', JSON.stringify(array));
-
-        getData();
-      }
-    }
+  const deleteData = async id => {
+    await axios
+      .delete(
+        `https://63200369e3bdd81d8ef08100.mockapi.io/hotelbooking/bookmark/${id}`,
+      )
+      .then(res => getData())
+      .catch(error => console.log(error));
   };
 
   return (
     <SafeAreaView style={{marginTop: Platform.OS === 'android' ? 50 : 0}}>
       <ScrollView>
-        <TouchableOpacity
-          style={{
-            paddingHorizontal: 20,
-          }}
-          onPress={() => navigation.goBack()}>
-          <FontAwesomeIcon icon={faArrowLeft} size={28} color={COLORS.xanh} />
-        </TouchableOpacity>
         <Text
           style={{
             fontSize: 20,
@@ -101,84 +61,34 @@ const CartList = ({navigation}) => {
           Bookmark
         </Text>
         <View>
-          {product.map((item, index) => {
-            return (
-              <CardBookmark
-                hotel={item}
-                key={index}
-                onPress2={() => removeItemHandler(item.id)}
-                onPress1={() => navigation.navigate('DetailScreen', item)}
-              />
-            );
-          })}
+          {product &&
+            product.map((item, index) => {
+              return (
+                <Swipeable
+                  renderRightActions={() => {
+                    return (
+                      <TouchableOpacity
+                        style={{justifyContent: 'center', alignItems: 'center'}}
+                        onPress={() => deleteData(item.id)}>
+                        <FontAwesomeIcon
+                          icon="fa-solid fa-trash"
+                          color="#e74c3c"
+                          size={30}
+                        />
+                      </TouchableOpacity>
+                    );
+                  }}
+                  key={index}>
+                  <CardBookmark
+                    hotel={item}
+                    key={index}
+                    //onPress2={() => deleteData(item.id)}
+                    onPress1={() => navigation.navigate('DetailScreen', item)}
+                  />
+                </Swipeable>
+              );
+            })}
         </View>
-        {/* <View style={{paddingHorizontal: 16, marginTop: 40, marginBottom: 80}}>
-          <Text
-            style={{
-              fontSize: 20,
-              fontWeight: '500',
-              color: COLORS.xanh,
-              letterSpacing: 1,
-              marginBottom: 10,
-            }}>
-            Order info
-          </Text>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              marginBottom: 8,
-            }}>
-            <Text
-              style={{
-                fontSize: 12,
-                fontWeight: '400',
-                maxWidth: '80%',
-                color: 'black',
-                opacity: 0.5,
-              }}>
-              Subtotal
-            </Text>
-            <Text
-              style={{
-                fontSize: 12,
-                fontWeight: '400',
-                color: 'black',
-                opacity: 0.8,
-              }}>
-              {total}.00
-            </Text>
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              marginBottom: 22,
-            }}>
-            <Text
-              style={{
-                fontSize: 12,
-                fontWeight: '400',
-                maxWidth: '80%',
-                color: 'black',
-                opacity: 0.5,
-              }}>
-              Shipping Tax
-            </Text>
-            <Text
-              style={{
-                fontSize: 12,
-                fontWeight: '400',
-                color: 'black',
-                opacity: 0.8,
-              }}>
-              {total / 20}
-            </Text>
-          </View>
-          
-        </View> */}
       </ScrollView>
     </SafeAreaView>
   );
